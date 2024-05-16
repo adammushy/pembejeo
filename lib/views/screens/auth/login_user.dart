@@ -1,7 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:pembejeo/constants/app_constants.dart';
+import 'package:pembejeo/providers/user_management_provider.dart';
+import 'package:pembejeo/shared-functions/float_snackbar.dart';
+import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
 import 'package:pembejeo/views/screens/auth/register_user.dart';
+import 'package:pembejeo/views/screens/menu/bottom_nav_bar.dart';
+import 'package:provider/provider.dart';
 // import 'package:hive/hive.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:loginuicolors/home.dart';
@@ -26,10 +32,12 @@ class _MyLoginState extends State<MyLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(opacity: 0.8,
-            image: AssetImage('assets/images/pembejeo2.jpg'),
-            fit: BoxFit.cover),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.white54],
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -39,14 +47,14 @@ class _MyLoginState extends State<MyLogin> {
             Container(
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
-                'Welcome\nBack',
+                'Welcome \nBack',
                 style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.5),
+                    top: MediaQuery.of(context).size.height * 0.4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -83,22 +91,22 @@ class _MyLoginState extends State<MyLogin> {
                           SizedBox(
                             height: 40,
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Remember Me",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              Checkbox(
-                                value: isChecked,
-                                onChanged: (value) {
-                                  isChecked = !isChecked;
-                                  setState(() {});
-                                },
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //       "Remember Me",
+                          //       style: TextStyle(color: Colors.black),
+                          //     ),
+                          //     Checkbox(
+                          //       value: isChecked,
+                          //       onChanged: (value) {
+                          //         isChecked = !isChecked;
+                          //         setState(() {});
+                          //       },
+                          //     ),
+                          //   ],
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -112,8 +120,51 @@ class _MyLoginState extends State<MyLogin> {
                                 backgroundColor: Color(0xff4c505b),
                                 child: IconButton(
                                     color: Colors.white,
-                                    onPressed: () {
+                                    onPressed: () async {
                                       // login();
+                                      var data = {
+                                        "email": email.text,
+                                        "password": password.text
+                                      };
+                                      print("data:: ${data}");
+                                      Map<String, dynamic> result =
+                                          await Provider.of<
+                                                      UserManagementProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .userLogin(context, data);
+                                      print("RESULT ::${result.toString()}");
+
+                                      if (result['status']) {
+                                        ShowMToast(context).successToast(
+                                            message: "Login Successful",
+                                            alignment: Alignment.bottomCenter);
+                                        SharedPreferencesManager().saveBool(
+                                            AppConstants.isLogin, true);
+
+                                        if (result['body']['user']
+                                                ['usertype'] ==
+                                            'NORMAL') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BottomNavigationBarMenu()),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AdminBottomNavigationBarMenu()),
+                                          );
+                                        }
+                                      } else {
+                                        ShowMToast(context).successToast(
+                                            message:
+                                                "Login Failed. wrong Login credentials",
+                                            alignment: Alignment.bottomCenter);
+                                      }
                                     },
                                     icon: Icon(
                                       Icons.arrow_forward,

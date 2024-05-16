@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pembejeo/constants/app_constants.dart';
 
 class ApiClientHttp {
-  final String baseUrl;
+  // final String baseUrl;
+  String baseUrl = AppConstants.apiBaseUrl;
+
   final Map<String, String> headers;
 
-  ApiClientHttp({required this.baseUrl, required this.headers});
+  ApiClientHttp({ required this.headers});
 
   Future<dynamic> getRequest(String endpoint) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/$endpoint'), headers: headers);
+      final response = await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform GET request: $e');
@@ -18,7 +21,7 @@ class ApiClientHttp {
 
   Future<dynamic> postRequest(String endpoint, dynamic body) async {
     try {
-      final response = await http.post(Uri.parse('$baseUrl/$endpoint'), headers: headers, body: jsonEncode(body));
+      final response = await http.post(Uri.parse('$baseUrl$endpoint'), headers: headers, body: jsonEncode(body));
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform POST request: $e');
