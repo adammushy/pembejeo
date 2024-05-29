@@ -20,6 +20,8 @@ class AppConstants {
 //API URLS
   static const String registerUrl = 'user-management/register-user';
   static const String loginUrl = 'user-management/login-user';
+  static const String fetchUsersUrl = 'user-management/user-information/all/';
+
   static const String createPermit = 'service-management/request-get-permit';
   static const String fetchPermits = 'service-management/get-all-permit';
   static const String changeStatus = 'service-management/change-permit-status';

@@ -10,8 +10,12 @@ class UserManagementProvider extends ChangeNotifier {
   var _user;
   var _userAccount;
 
+  List<Map<String, dynamic>> _allUsers = [];
+  // var _allPermits;
+
+  List<Map<String, dynamic>> get allUsers => _allUsers;
+
   get user => _user;
-  
 
   Future<Map<String, dynamic>> userLogin(ctx, data) async {
     try {
@@ -63,6 +67,44 @@ class UserManagementProvider extends ChangeNotifier {
       }
     } catch (e) {
       return {"status": false, "body": e.toString()};
+    }
+  }
+
+  Future<bool> fetchAllUsers() async {
+    try {
+      // var user = await SharedPreferencesManager().getString(AppConstants.user);
+      // var res = await ApiClientHttp(
+      //         headers: <String, String>{'Content-type': 'application/json'})
+      //     .getRequest(
+      //         '${AppConstants.createPermit}?id=${jsonDecode(user)['id']}');
+
+      var res = await ApiClientHttp(
+              headers: <String, String>{'Content-type': 'application/json'})
+          .getRequest(AppConstants.fetchUsersUrl);
+      print("RES:: ${res}");
+
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        print("BODY:: ${body}");
+
+        // print("All Permits :: ${body.length}");
+        // _allUsers = body;
+
+        _allUsers = List<Map<String, dynamic>>.from(body);
+
+        print("All Users :: ${_allUsers}");
+        print("All Users total :: ${_allUsers.length}");
+
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      // debugPrint(e.toString());
+      print("Error Exception :: ${e.toString()}");
+
+      return false;
     }
   }
 

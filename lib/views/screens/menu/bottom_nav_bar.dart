@@ -6,6 +6,7 @@ import 'package:pembejeo/constants/app_colors.dart';
 import 'package:pembejeo/constants/app_constants.dart';
 import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
 import 'package:pembejeo/views/other/admin_home.dart';
+import 'package:pembejeo/views/other/components/dashboard.dart';
 import 'package:pembejeo/views/other/home.dart';
 import 'package:pembejeo/views/profile/profile.dart';
 
@@ -119,7 +120,8 @@ class _AdminBottomNavigationBarMenuState
         controller: _pageController,
         children: const [
           // Center(child: Text("1")),
-          AdminHomeScreen(),
+          DashboardScreen(),
+          // AdminHomeScreen(),
           // Center(child: Text("2")),
           // Center(child: Text("3")),
           MyProfile()
@@ -141,6 +143,11 @@ class _AdminBottomNavigationBarMenuState
             title: Text('Home'),
             activeColor: AppColors.primaryColor,
           ),
+          // BottomBarItem(
+          //   icon: Icon(Icons.local_shipping),
+          //   title: Text('Home'),
+          //   activeColor: AppColors.primaryColor,
+          // ),
           // BottomBarItem(
           //   icon: Icon(Icons.star),
           //   title: Text('Favourite'),
