@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pembejeo/providers/service_management_provider.dart';
 import 'package:pembejeo/providers/user_management_provider.dart';
+import 'package:pembejeo/views/admin/allusers.dart';
 import 'package:pembejeo/views/other/admin_home.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,13 @@ class _StatsCardTileState extends State<StatsCardTile> {
             // GoRouter.of(context).go("/home/profile/users");
           } else if (widget.index == 2) {
             // GoRouter.of(context).go("/home/profile/admins");
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AllUsersScreen(),
+              ),
+            );
           } else if (widget.index == 3) {
             // GoRouter.of(context).go("/home/profile/allusers");
           }

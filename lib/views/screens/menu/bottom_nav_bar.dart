@@ -5,8 +5,10 @@ import 'package:bottom_bar/bottom_bar.dart';
 import 'package:pembejeo/constants/app_colors.dart';
 import 'package:pembejeo/constants/app_constants.dart';
 import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:pembejeo/views/admin/dashboard.dart';
 import 'package:pembejeo/views/other/admin_home.dart';
-import 'package:pembejeo/views/other/components/dashboard.dart';
+// import 'package:pembejeo/views/other/components/dashboard.dart';
+// import 'package:pembejeo/views/other/dashboard.dart';
 import 'package:pembejeo/views/other/home.dart';
 import 'package:pembejeo/views/profile/profile.dart';
 
