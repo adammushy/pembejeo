@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pembejeo/providers/service_management_provider.dart';
@@ -44,6 +46,20 @@ class _StatsCardTileState extends State<StatsCardTile> {
     });
   }
 
+  final List<Color> colorList = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow
+  ];
+
+  /// Function to generate a random color from the list
+  Color getRandomColor() {
+    final random = Random();
+    final randomIndex = random.nextInt(colorList.length);
+    return colorList[randomIndex];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -72,6 +88,7 @@ class _StatsCardTileState extends State<StatsCardTile> {
         child: Container(
           decoration: BoxDecoration(
             color: Commons.dashColor[widget.index!],
+            // color: getRandomColor(),
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Padding(

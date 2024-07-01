@@ -225,7 +225,7 @@ class _MyRegisterState extends State<MyRegister> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
                                   ),
-                                  items: ['ADMIN', 'PERMIT', 'AGENT', 'NORMAL']
+                                  items: ['ADMIN', 'NORMAL']
                                       .map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,

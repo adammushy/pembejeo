@@ -41,8 +41,8 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                 rows: userManagementProvider.allUsers.map((user) {
                   String roleName = '';
                   switch (user['usertype']) {
-                    case 'NORMAL':
-                      roleName = 'User';
+                    case 'DRIVER':
+                      roleName = 'Driver';
                       break;
                     case 'ADMIN':
                       roleName = 'Admin';

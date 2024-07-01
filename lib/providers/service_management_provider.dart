@@ -139,4 +139,31 @@ class ServiceManagementProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> changePaymentStatus(data) async {
+    try {
+      var res = await ApiClientHttp(
+              headers: <String, String>{'Content-type': 'application/json'})
+          .postRequest(AppConstants.changepaymentStatus, data);
+      // print("RES :: ${res}");
+
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body['change']) {
+          // getAllPermits();
+          print("Body :: ${body}");
+          fetchAllPermits();
+
+          notifyListeners();
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }

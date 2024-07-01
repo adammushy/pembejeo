@@ -25,6 +25,8 @@ class AppConstants {
   static const String createPermit = 'service-management/request-get-permit';
   static const String fetchPermits = 'service-management/get-all-permit';
   static const String changeStatus = 'service-management/change-permit-status';
+  static const String changepaymentStatus =
+      'service-management/change-payment-status';
 
   // static List<LanguageModel> languages = [
   //   LanguageModel(imageUrl: Images.unitedKingdom, languageName: 'English', countryCode: 'US', languageCode: 'en'),

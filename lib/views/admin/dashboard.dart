@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pembejeo/providers/service_management_provider.dart';
 import 'package:pembejeo/providers/user_management_provider.dart';
-import 'package:pembejeo/views/other/dashboardcard.dart';
+import 'package:pembejeo/views/admin/dashboardcard.dart';
+// import 'package:pembejeo/views/other/dashboardcard.dart';
 import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
