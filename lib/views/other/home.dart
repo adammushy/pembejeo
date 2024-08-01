@@ -1,16 +1,31 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:flutter/rendering.dart';
+// import 'dart:io';
 import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:intl/intl.dart';
 import 'package:pembejeo/constants/app_constants.dart';
 import 'package:pembejeo/providers/service_management_provider.dart';
 import 'package:pembejeo/shared-functions/float_snackbar.dart';
 import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:pembejeo/views/other/qrdoc.dart';
 import 'package:pembejeo/views/permits/request_form.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:document_file_save_plus/document_file_save_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<ServiceManagementProvider>(context, listen: false)
         .getAllPermits();
     getUserId();
+    requestStoragePermission();
   }
 
   var userId;
@@ -50,6 +66,29 @@ class _HomeScreenState extends State<HomeScreen> {
       print("user ID :: $userId");
       print("USERTYPE :: $usertype");
     });
+  }
+
+  String dateTimeFormat() {
+    // Parse the original datetime string to a DateTime object
+    DateTime originalDatetime = DateTime.now();
+
+    // Format the DateTime object to show only date, hour, and minute
+    String formattedDatetimeStr =
+        DateFormat('yyyy-MM-dd HH:mm').format(originalDatetime);
+
+    // print(formattedDatetimeStr);
+    return formattedDatetimeStr; // Output: 2024-06-10 01:45
+  }
+
+  Future<bool> requestStoragePermission() async {
+    PermissionStatus status = await Permission.manageExternalStorage.status;
+    if (!status.isGranted) {
+      // status = await Permission.accessMediaLocation.request();
+      // status = await Permission.storage.request();
+      // st = await Permission.storage.request();
+      status = await Permission.manageExternalStorage.request();
+    }
+    return status.isGranted;
   }
 
   bool isTestMode = true;
@@ -109,8 +148,11 @@ class _HomeScreenState extends State<HomeScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("You are required to pay 10,000 Tshs. to get the Certificate"),
-              SizedBox(height: 10,),
+              Text(
+                  "You are required to pay 10,000 Tshs. to get the Certificate"),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
@@ -139,11 +181,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 res = res.toJson();
                 if (res['success']) {
-                  Provider.of<ServiceManagementProvider>(context, listen: false)
+                  var result = Provider.of<ServiceManagementProvider>(context,
+                          listen: false)
                       .changePaymentStatus(data);
-                  ShowMToast(context).successToast(
-                      message: "Payment Success", alignment: Alignment.center);
-                  Navigator.of(context).pop();
+                  if (res) {
+                    ShowMToast(context).successToast(
+                        message: "Payment Success",
+                        alignment: Alignment.center);
+                    Navigator.of(context).pop();
+                  }
+                  {
+                    ShowMToast(context).errorToast(
+                        message: "Payment Failed", alignment: Alignment.center);
+                    Navigator.of(context).pop();
+                  }
+                  // Navigator.of(context).pop();
                 } else {
                   ShowMToast(context).errorToast(
                       message: "Payment Failed", alignment: Alignment.center);
@@ -236,6 +288,11 @@ class _HomeScreenState extends State<HomeScreen> {
         // var permit = permits[index];
         var permit = filteredPermits[index];
 
+        String day =
+            DateFormat.d().format(DateTime.parse(permit['created_at']));
+        String formattedDate =
+            DateFormat('MMM-yyyy').format(DateTime.parse(permit['created_at']));
+
         return InkWell(
           onTap: () {
             print("order clicked");
@@ -264,11 +321,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "20",
+                            // "20",
+                            day,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "aug-2020",
+                            // "aug-2020",
+                            formattedDate,
                             style: TextStyle(fontSize: 8),
                           )
                         ],
@@ -312,7 +371,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     trailing: permit['status'] == 'PERMITED'
                         ? (permit['payment'] == 'PAID'
                             ? InkWell(
-                                onTap: () {},
+                                onTap: () async {
+                                  var res = await generatePDF(
+                                    permit['issued_by']['username'],
+                                    permit['issued_by']['phone'],
+                                    permit['permit_typec'],
+                                    permit['livestock_number'].toString(),
+                                    permit['customer']['username'],
+                                    permit['permit_number'],
+                                    permit,
+                                    permit['issued_at'],
+                                  );
+                                  print("response ${res}");
+                                },
                                 child: Icon(Icons.download,
                                     color: Colors.black, size: 30.0),
                               )
@@ -330,5 +401,129 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  Future<pw.Document> generatePDF(
+    String officerName,
+    String officerPhone,
+    String permitType,
+    String numbers,
+    String customer,
+    String permitNo,
+    Map<String, dynamic> data,
+    // String animalType,
+    String issuedDate,
+
+    // String paymentDate
+  ) async {
+    final pdf = pw.Document();
+    final image = await rootBundle
+        .load('assets/images/permit.png'); // Load your logo image
+    // final imageQrCode =
+    //     await rootBundle.load('assets/qrcode.png'); // Load your QR code image
+    final Uint8List logo = image.buffer.asUint8List();
+    // final imageQrCode = PrettyQrView.data(
+    //   data: jsonEncode(data),
+    //   decoration: PrettyQrDecoration(
+    //     image: PrettyQrDecorationImage(
+    //       image: AssetImage("assets/images/Koba.png"),
+    //     ),
+    //   ),
+    // );
+    // final Uint8List qrCode = imageQrCode.buffer.asUint8List();
+    var dateIssue = DateTime.parse(issuedDate);
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Image(pw.MemoryImage(logo),
+                    height: 100), // Adjust the height
+              ),
+              pw.SizedBox(height: 5),
+              pw.Center(
+                child: pw.Text(
+                  'THE UNITED REPUBLIC OF TANZANIA\n  LICENSE',
+                  style: pw.TextStyle(
+                      fontSize: 14, fontWeight: pw.FontWeight.bold),
+                  textAlign: pw.TextAlign.center,
+                ),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Center(
+                child: pw.Text(
+                  'CERT NO: ${permitNo.toString() ?? "3353343545676"}\n'
+                  '',
+                  style: pw.TextStyle(fontSize: 12),
+                  textAlign: pw.TextAlign.center,
+                ),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                'Issuing Office:\n${officerName.toUpperCase()}\nTel: ${officerPhone}',
+                style: pw.TextStyle(fontSize: 12),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                'License Issued To:\n${customer.toUpperCase()}',
+                style: pw.TextStyle(fontSize: 12),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                'for the ${permitType} of:\n ${numbers}  animals',
+                style: pw.TextStyle(fontSize: 12),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                'From: Mkeya\nTo: Bosari\n',
+                style: pw.TextStyle(fontSize: 12),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                'Issued On: ${DateFormat('yyyy-MM-dd HH:mm').format(dateIssue)}\n',
+                style: pw.TextStyle(fontSize: 12),
+              ),
+              pw.SizedBox(height: 20),
+              pw.Text(
+                'NOTE: This is a Digital Copy does not require a signature of authority.\n'
+                'NOTE: This Permit is not Transferable. It is not a congestion authorized to the place of\n'
+                'business. It is for the business described above and in the event of any changes of place\n'
+                'or business should notify the Issuing Authority.',
+                style: pw.TextStyle(fontSize: 10),
+                textAlign: pw.TextAlign.center,
+              ),
+              pw.SizedBox(height: 20),
+              // pw.Align(
+              //   alignment: pw.Alignment.center,
+              //   child: pw.Image(pw.MemoryImage(logo), height: 100),
+              // ),
+            ],
+          );
+        },
+      ),
+    );
+    final directory = Directory('/storage/emulated/0/Vibali');
+    if (!(await directory.exists())) {
+      await directory.create(recursive: true);
+    }
+
+    // Define the file path
+    final filePath = "${directory.path}/kilbali.pdf";
+
+    // Save the PDF bytes
+    final pdfBytes = await pdf.save();
+    final file = File(filePath);
+    await file.writeAsBytes(pdfBytes.toList());
+    var save = DocumentFileSavePlus().saveFile(pdfBytes,
+        "Kibali${DateTime.now().toIso8601String()}.pdf", "Kibali/pdf");
+
+    ShowMToast(context).successToast(
+        message: "PDF saved successfully at ${save}",
+        alignment: Alignment.bottomCenter);
+
+    return pdf;
   }
 }

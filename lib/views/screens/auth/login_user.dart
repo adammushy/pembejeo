@@ -36,7 +36,7 @@ class _MyLoginState extends State<MyLogin> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.white54],
+          colors: [Colors.white, Color.fromARGB(255, 172, 163, 255)],
         ),
       ),
       child: Scaffold(
@@ -197,16 +197,16 @@ class _MyLoginState extends State<MyLogin> {
                                 ),
                                 style: ButtonStyle(),
                               ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Forgot Password',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Color(0xff4c505b),
-                                      fontSize: 18,
-                                    ),
-                                  )),
+                              // TextButton(
+                              //     onPressed: () {},
+                              //     child: Text(
+                              //       'Forgot Password',
+                              //       style: TextStyle(
+                              //         decoration: TextDecoration.underline,
+                              //         color: Color(0xff4c505b),
+                              //         fontSize: 18,
+                              //       ),
+                              //     ),),
                             ],
                           )
                         ],

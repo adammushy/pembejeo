@@ -76,6 +76,8 @@ class ServiceManagementProvider extends ChangeNotifier {
           return true;
         }
       }
+      notifyListeners();
+
       return false;
     } catch (e) {
       // debugPrint(e.toString());

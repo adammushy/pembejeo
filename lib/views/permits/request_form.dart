@@ -24,6 +24,8 @@ class _RequestPermitFormState extends State<RequestPermitForm> {
   String? _selectedAnimalType;
 
   TextEditingController name = TextEditingController();
+  TextEditingController transport = TextEditingController();
+
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController address = TextEditingController();
@@ -204,6 +206,18 @@ class _RequestPermitFormState extends State<RequestPermitForm> {
                   const SizedBox(
                     height: 8,
                   ),
+                  if (_selectedPermitType == 'TRANSFER')
+                    TextField(
+                      controller: transport,
+                      decoration: const InputDecoration(
+                        hintText: "T123 xyz",
+                        border: OutlineInputBorder(),
+                        labelText: 'Transportation Details',
+                      ),
+                    ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   DropdownButtonFormField<String>(
                     value: _selectedAnimalType,
                     icon: const Icon(Icons.arrow_downward),
@@ -262,6 +276,7 @@ class _RequestPermitFormState extends State<RequestPermitForm> {
                 Text('From : ${_selectedRegion}'),
                 Text('To : ${_selectedRegion2}'),
                 Text('Permit type : ${_selectedPermitType}'),
+                Text('Transport : ${transport.text}'),
                 Text('Animal type : ${_selectedAnimalType}'),
                 Text('Total Cattle : ${total.text}'),
               ],
@@ -289,6 +304,7 @@ class _RequestPermitFormState extends State<RequestPermitForm> {
               "customer": userId,
               "livestock_number": total.text,
               "permit_typec": _selectedPermitType,
+              "transport": transport.text??'',
               "issued_at": DateTime.now().toIso8601String()
             };
             print("data:: ${data}");

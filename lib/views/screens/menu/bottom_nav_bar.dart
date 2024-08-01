@@ -49,7 +49,7 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu>
           // Center(child: Text("1")),
 
           HomeScreen(),
-          Center(child: Text("2")),
+          // Center(child: Text("2")),
           // Center(child: Text("3")),
           MyProfile()
         ],
@@ -70,11 +70,11 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu>
             title: Text('Home'),
             activeColor: AppColors.primaryColor,
           ),
-          BottomBarItem(
-            icon: Icon(Icons.star),
-            title: Text('Favourite'),
-            activeColor: AppColors.primaryColor,
-          ),
+          // BottomBarItem(
+          //   icon: Icon(Icons.star),
+          //   title: Text('Favourite'),
+          //   activeColor: AppColors.primaryColor,
+          // ),
           BottomBarItem(
             icon: Icon(Icons.person),
             title: Text('Profile'),

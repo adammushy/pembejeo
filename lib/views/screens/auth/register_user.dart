@@ -15,6 +15,8 @@ class MyRegister extends StatefulWidget {
 
 class _MyRegisterState extends State<MyRegister> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController nidaController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstController = TextEditingController();
@@ -32,7 +34,7 @@ class _MyRegisterState extends State<MyRegister> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.white54],
+          colors: [Colors.white, Color.fromARGB(255, 172, 163, 255)],
         ),
       ),
       child: Scaffold(
@@ -140,6 +142,32 @@ class _MyRegisterState extends State<MyRegister> {
                                 height: 30,
                               ),
                               TextField(
+                                controller: nidaController,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    hintText: "Nida",
+                                    hintStyle: TextStyle(color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              TextField(
                                 controller: emailController,
                                 style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -225,8 +253,8 @@ class _MyRegisterState extends State<MyRegister> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
                                   ),
-                                  items: ['ADMIN', 'NORMAL']
-                                      .map((String value) {
+                                  items:
+                                      ['ADMIN', 'NORMAL'].map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(value),
@@ -292,6 +320,7 @@ class _MyRegisterState extends State<MyRegister> {
                                               "firstname": firstController.text,
                                               "lastname": lastController.text,
                                               "username": nameController.text,
+                                              "nida_no": nidaController.text,
                                               "email": emailController.text,
                                               "phone": phoneController.text,
                                               "password":

@@ -103,7 +103,7 @@ class _MyProfileState extends State<MyProfile> {
               physics: BouncingScrollPhysics(),
               children: [
                 ProfileWidget(
-                  imagePath: Images.loveIcon,
+                  imagePath: "assets/images/user.jpg",
                   onClicked: () {
                     // Navigator.of(context).push(
                     //   MaterialPageRoute(builder: (context) => EditProfilePage()),
