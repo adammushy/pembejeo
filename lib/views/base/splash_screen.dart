@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/constants/dimensions.dart';
-import 'package:pembejeo/constants/images.dart';
-import 'package:pembejeo/providers/user_management_provider.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
-import 'package:pembejeo/views/screens/auth/login_user.dart';
-import 'package:pembejeo/views/screens/menu/bottom_nav_bar.dart';
-import 'package:pembejeo/views/screens/onboarding/onboarding-screen.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/constants/dimensions.dart';
+import 'package:Permit/constants/images.dart';
+import 'package:Permit/providers/user_management_provider.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/views/screens/auth/login_user.dart';
+import 'package:Permit/views/screens/menu/bottom_nav_bar.dart';
+import 'package:Permit/views/screens/onboarding/onboarding-screen.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {

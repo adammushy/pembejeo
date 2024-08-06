@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/dimensions.dart';
+import 'package:Permit/constants/dimensions.dart';
 
 const rubikRegular = TextStyle(
   fontFamily: 'Rubik',

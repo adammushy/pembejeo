@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/providers/user_management_provider.dart';
-import 'package:pembejeo/shared-functions/float_snackbar.dart';
-import 'package:pembejeo/views/screens/auth/login_user.dart';
+import 'package:Permit/providers/user_management_provider.dart';
+import 'package:Permit/shared-functions/float_snackbar.dart';
+import 'package:Permit/views/screens/auth/login_user.dart';
 import 'package:provider/provider.dart';
 
 class MyRegister extends StatefulWidget {

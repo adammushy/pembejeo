@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:pembejeo/constants/app_constants.dart';
+import 'package:Permit/constants/app_constants.dart';
 
 class ApiClientHttp {
   // final String baseUrl;
@@ -8,11 +8,12 @@ class ApiClientHttp {
 
   final Map<String, String> headers;
 
-  ApiClientHttp({ required this.headers});
+  ApiClientHttp({required this.headers});
 
   Future<dynamic> getRequest(String endpoint) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
+      final response =
+          await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform GET request: $e');
@@ -21,7 +22,8 @@ class ApiClientHttp {
 
   Future<dynamic> postRequest(String endpoint, dynamic body) async {
     try {
-      final response = await http.post(Uri.parse('$baseUrl$endpoint'), headers: headers, body: jsonEncode(body));
+      final response = await http.post(Uri.parse('$baseUrl$endpoint'),
+          headers: headers, body: jsonEncode(body));
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform POST request: $e');
@@ -30,7 +32,8 @@ class ApiClientHttp {
 
   Future<dynamic> putRequest(String endpoint, dynamic body) async {
     try {
-      final response = await http.put(Uri.parse('$baseUrl/$endpoint'), headers: headers, body: jsonEncode(body));
+      final response = await http.put(Uri.parse('$baseUrl/$endpoint'),
+          headers: headers, body: jsonEncode(body));
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform PUT request: $e');
@@ -39,7 +42,8 @@ class ApiClientHttp {
 
   Future<dynamic> deleteRequest(String endpoint) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$endpoint'), headers: headers);
+      final response =
+          await http.delete(Uri.parse('$baseUrl/$endpoint'), headers: headers);
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform DELETE request: $e');
@@ -50,7 +54,8 @@ class ApiClientHttp {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed with status code ${response.statusCode}: ${response.body}');
+      throw Exception(
+          'Failed with status code ${response.statusCode}: ${response.body}');
     }
   }
 }

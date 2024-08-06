@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:bottom_bar/bottom_bar.dart';
-import 'package:pembejeo/constants/app_colors.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
-import 'package:pembejeo/views/admin/dashboard.dart';
-import 'package:pembejeo/views/other/admin_home.dart';
-// import 'package:pembejeo/views/other/components/dashboard.dart';
-// import 'package:pembejeo/views/other/dashboard.dart';
-import 'package:pembejeo/views/other/home.dart';
-import 'package:pembejeo/views/profile/profile.dart';
+import 'package:Permit/constants/app_colors.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/views/admin/dashboard.dart';
+import 'package:Permit/views/other/admin_home.dart';
+// import 'package:Permit/views/other/components/dashboard.dart';
+// import 'package:Permit/views/other/dashboard.dart';
+import 'package:Permit/views/other/home.dart';
+import 'package:Permit/views/profile/profile.dart';
 
 class BottomNavigationBarMenu extends StatefulWidget {
   const BottomNavigationBarMenu({super.key});

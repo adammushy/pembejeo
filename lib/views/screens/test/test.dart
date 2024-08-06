@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/helpers/database-sqlf/database.dart';
-import 'package:pembejeo/providers/default_provider.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/helpers/database-sqlf/database.dart';
+import 'package:Permit/providers/default_provider.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

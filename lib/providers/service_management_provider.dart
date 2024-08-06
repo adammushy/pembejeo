@@ -4,9 +4,9 @@ import 'dart:convert';
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/helpers/api/api_client_http.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/helpers/api/api_client_http.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
 
 class ServiceManagementProvider extends ChangeNotifier {
   var _permit;
@@ -161,6 +161,7 @@ class ServiceManagementProvider extends ChangeNotifier {
           notifyListeners();
           return true;
         } else {
+          notifyListeners();
           return false;
         }
       }

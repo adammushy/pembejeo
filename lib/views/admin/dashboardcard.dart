@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pembejeo/providers/service_management_provider.dart';
-import 'package:pembejeo/providers/user_management_provider.dart';
-import 'package:pembejeo/views/admin/allusers.dart';
-import 'package:pembejeo/views/other/admin_home.dart';
+import 'package:Permit/providers/service_management_provider.dart';
+import 'package:Permit/providers/user_management_provider.dart';
+import 'package:Permit/views/admin/allusers.dart';
+import 'package:Permit/views/other/admin_home.dart';
 import 'package:provider/provider.dart';
 
 class StatsCardTile extends StatefulWidget {

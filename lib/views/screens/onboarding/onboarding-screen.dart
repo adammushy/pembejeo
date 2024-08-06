@@ -1,8 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/images.dart';
-import 'package:pembejeo/views/screens/menu/bottom_nav_bar.dart';
+import 'package:Permit/constants/images.dart';
+import 'package:Permit/views/screens/menu/bottom_nav_bar.dart';
 import 'package:intro_screen_onboarding_flutter/intro_app.dart';
 
 class OnboardingScreen extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/helpers/api/api_client_http.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/helpers/api/api_client_http.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
 import 'package:provider/provider.dart';
 
 class UserManagementProvider extends ChangeNotifier {

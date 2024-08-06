@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/providers/user_management_provider.dart';
-import 'package:pembejeo/shared-functions/float_snackbar.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
-import 'package:pembejeo/views/screens/auth/register_user.dart';
-import 'package:pembejeo/views/screens/menu/bottom_nav_bar.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/providers/user_management_provider.dart';
+import 'package:Permit/shared-functions/float_snackbar.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/views/screens/auth/register_user.dart';
+import 'package:Permit/views/screens/menu/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 // import 'package:hive/hive.dart';
 // import 'package:hive_flutter/hive_flutter.dart';

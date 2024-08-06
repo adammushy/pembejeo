@@ -4,11 +4,11 @@ import 'dart:convert';
 
 import 'package:clean_dialog/clean_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/constants/images.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
-import 'package:pembejeo/views/profile/widgets.dart';
-import 'package:pembejeo/views/screens/auth/login_user.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/constants/images.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/views/profile/widgets.dart';
+import 'package:Permit/views/screens/auth/login_user.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});

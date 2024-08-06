@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:pembejeo/constants/app_constants.dart';
-import 'package:pembejeo/providers/service_management_provider.dart';
-import 'package:pembejeo/shared-preference-manager/preference-manager.dart';
+import 'package:Permit/constants/app_constants.dart';
+import 'package:Permit/providers/service_management_provider.dart';
+import 'package:Permit/shared-preference-manager/preference-manager.dart';
 import 'package:provider/provider.dart';
 import 'package:clean_dialog/clean_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -186,7 +186,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               showDialog(
                 context: context,
                 builder: (context) => CleanDialog(
-                   
                   title: permit['permit_typec'],
                   content:
                       '${permit['customer']['firstname']} ${permit['customer']['lastname']} \n ${permit['customer']['phone']} \n ${permit['customer']['email']} \n no of LiveStock : ${permit['livestock_number']}',
@@ -203,8 +202,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       onPressed: () {
                         // documentGenerator();
                         Navigator.pop(context);
-
-                        
                       },
                     ),
                     CleanDialogActionButtons(
